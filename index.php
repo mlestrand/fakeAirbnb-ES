@@ -1,3 +1,10 @@
+<?php
+include("src/functions.php");
+$db=dbConnect();
+$neighborhood = getNeighborhoods($db);
+$room = getRoomTypes($db);
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -42,20 +49,70 @@
 
     <div class="album py-5 bg-light">
         <div class="container">
-        <h1>a title:</h1>
+        <h1>Search for rentals in the Portland area: </h1>
 
+        <form method="GET" action="results.php">
             <div class="row g-3 align-items-center">
+
                 <div class="col-auto">
-                    <label for="neighborhood" class="col-form-label">sample form element label</label>
+                    <label for="neighborhood" class="col-form-label">Neighborhood</label>
                 </div>
 
                 <div class="col-auto">
-                        form element here
+                        <select class='form-select' name='neighborhood'>
+                        <option selected="selected" value="any">Any</option>
+                        <?php
+                            foreach($neighborhood as $neighborhood){
+                            $name = $neighborhood["neighborhood"];
+                            $id = $neighborhood["id"];
+                            echo "<option value='$id'> $name </option>";
+                            }
+                        ?>
+                        </select>
                 </div>
+
 
             </div><!-- row -->
 
+            <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                    <label for="room" class="col-form-label">Room Type</label>
+                </div>
 
+                <div class="col-auto">
+                        <select class='form-select' name='room'>
+                        <option selected="selected" value="any">Any</option>
+                        <?php
+                            foreach($room as $room){
+                            $name = $room["type"];
+                            $id = $room["id"];
+                            echo "<option value='$id'> $name </option>";
+                            }
+                        ?>
+                        </select>
+                </div>
+            </div>
+
+            <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                    <label for="number" class="col-form-label">Number of Guests:</label>
+                </div>
+
+                <div class="col-auto">
+                        <select class='form-select' name='number'>
+                            <?php
+                                $options = "";
+                                foreach(range(1,10,1) as $i){
+                                    $options.="<option value='$i'>$i</option>";
+                                }
+                                echo $options; 
+                            ?>
+                        </select>
+                </div>
+            </div>
+
+        <button type='submit' class='btn btn-primary'>Submit</button>
+        </form>
         </div><!-- .container-->
     </div><!-- album-->
 

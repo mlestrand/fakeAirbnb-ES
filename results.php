@@ -1,3 +1,16 @@
+<?php
+include("src/functions.php");
+$db=dbConnect();
+$neighborhoodId = $_GET['neighborhood'];
+$roomId = $_GET['room'];
+$number = $_GET['number'];
+$neighborhood = convertNeighborhoodId($db,$neighborhoodId);
+$room = convertRoomId($db,$roomId);
+$numberOfResults = findNumberOfResults($db,$neighborhoodId, $roomId, $number);
+$results = getResults($db,$neighborhoodId, $roomId, $number);
+if ($numberOfResults>20){$numberOfResults=20;}
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -44,23 +57,24 @@
 
         <div class="container">
 
-            <h1>Some Text</h1>
+            <h1>Results(<?=$numberOfResults?>)</h1>
 
-
+            <p><b>Neighborhood:</b> <?= $neighborhood ?> </p>
+            <p><b>Room Type:</b> <?= $room ?> </p>
+            <p><b>Accomodates:</b> <?= $number ?> </p>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
 <div class="col">
     <div class="card shadow-sm">
-        <img src="https://a0.muscache.com/pictures/miso/Hosting-595680673819411804/original/a6e6fda5-2935-4e2e-ba34-2fc50bba5cf3.jpeg">
-
+        <img src= <?=$results[0]["pictureUrl"]?>>
         <div class="card-body">
-            <h5 class="card-title">Kerns</h5>
-            <p class="card-text">1922 Craftsman Compound in Laurelhurst ~ Sleeps 12<br>Entire home/apt</p>
-            <p class="card-text">Accommodates 16</p>
+            <h5 class="card-title"><?=convertNeighborhoodId($db, $results[0]["neighborhoodId"]) ?></h5>
+            <p class="card-text"><?=$results[0]["name"] ?><br><?=convertRoomId($db, $results[0]["roomTypeId"]) ?></p>
+            <p class="card-text">Accommodates <?= $results[0]["accommodates"] ?></p>
 
             <p class="card-text align-bottom">
-            <i class="bi bi-star-fill"></i><span class=""> 5.00</span>
+            <i class="bi bi-star-fill"></i><span class=""> <?= $results[0]["rating"]?></span>
             </p>
 
             <div class="d-flex justify-content-between align-items-center">
@@ -68,7 +82,7 @@
                     <button type="button" id="3301" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
     
                 </div>
-                <small class="text-muted">$960.00</small>
+                <small class="text-muted">$<?=$results[0]["price"]?></small>
 
             </div>
         </div>
