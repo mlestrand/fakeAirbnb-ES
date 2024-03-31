@@ -1,6 +1,55 @@
 <?php
 include ("config/config.php");
 
+function dbConnect(){
+    /* defined in config/config.php */
+    /*** connection credentials *******/
+    $servername = SERVER;
+    $username = USERNAME;
+    $password = PASSWORD;
+    $database = DATABASE;
+    $dbport = PORT;
+    /****** connect to database **************/
+
+    try {
+        $db = new PDO("mysql:host=$servername;dbname=$database;charset=utf8mb4;port=$dbport", $username, $password);
+    }
+    catch(PDOException $e) {
+        echo $e->getMessage();
+    }
+    return $db;
+}
+
+function populateCards($db,$results, $numberOfResults){
+    $cards = "";
+    for ($i=0;$i<$numberOfResults;$i++){
+        $cards.='<div class="col">
+        <div class="card shadow-sm">
+            <img src='. $results[$i]["pictureUrl"].'>
+            <div class="card-body">
+                <h5 class="card-title">'.convertNeighborhoodId($db, $results[0]["neighborhoodId"]).'</h5>
+                <p class="card-text">'.$results[$i]["name"].'<br>'.convertRoomId($db, $results[$i]["roomTypeId"]).'</p>
+                <p class="card-text">Accommodates '.$results[$i]["accommodates"].'</p>
+    
+                <p class="card-text align-bottom">
+                <i class="bi bi-star-fill"></i><span class="">'.$results[$i]["rating"].'</span>
+                </p>
+    
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" id="3301" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
+        
+                    </div>
+                    <small class="text-muted">$'.$results[$i]["price"].'</small>
+    
+                </div>
+            </div>
+        </div><!--.card-->
+    </div><!--.col-->';
+    }
+    return $cards;
+}
+
 function findNumberOfResults($db, $nId, $rId, $a){
     // NEED TO MAKE EXCEPTIONS FOR "ANY"
     try {
@@ -75,26 +124,6 @@ function getRoomTypes($db){
         echo $e;
     }
     return $rows;
-}
-
-
-function dbConnect(){
-    /* defined in config/config.php */
-    /*** connection credentials *******/
-    $servername = SERVER;
-    $username = USERNAME;
-    $password = PASSWORD;
-    $database = DATABASE;
-    $dbport = PORT;
-    /****** connect to database **************/
-
-    try {
-        $db = new PDO("mysql:host=$servername;dbname=$database;charset=utf8mb4;port=$dbport", $username, $password);
-    }
-    catch(PDOException $e) {
-        echo $e->getMessage();
-    }
-    return $db;
 }
 
 

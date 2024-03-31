@@ -65,32 +65,11 @@ if ($numberOfResults>20){$numberOfResults=20;}
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-<div class="col">
-    <div class="card shadow-sm">
-        <img src= <?=$results[0]["pictureUrl"]?>>
-        <div class="card-body">
-            <h5 class="card-title"><?=convertNeighborhoodId($db, $results[0]["neighborhoodId"]) ?></h5>
-            <p class="card-text"><?=$results[0]["name"] ?><br><?=convertRoomId($db, $results[0]["roomTypeId"]) ?></p>
-            <p class="card-text">Accommodates <?= $results[0]["accommodates"] ?></p>
-
-            <p class="card-text align-bottom">
-            <i class="bi bi-star-fill"></i><span class=""> <?= $results[0]["rating"]?></span>
-            </p>
-
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                    <button type="button" id="3301" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
-    
-                </div>
-                <small class="text-muted">$<?=$results[0]["price"]?></small>
-
-            </div>
-        </div>
-    </div><!--.card-->
-</div><!--.col-->
 
 
-
+<?php
+    echo populateCards($db,$results, $numberOfResults);
+?>
 
 
 
