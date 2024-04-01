@@ -20,6 +20,7 @@ function dbConnect(){
     return $db;
 }
 
+
 function populateCards($db,$results, $numberOfResults){
     $cards = "";
     for ($i=0;$i<$numberOfResults;$i++){

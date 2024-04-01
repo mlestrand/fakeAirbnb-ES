@@ -15,6 +15,7 @@ $results = getResults($db,$neighborhoodId, $roomId, $number);
 if ($numberOfResults>20){$numberOfResults=20;}
 ?>
 
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -85,6 +86,9 @@ if ($numberOfResults>20){$numberOfResults=20;}
 
 <?php
     echo populateCards($db,$results, $numberOfResults);
+    if ($numberOfResults==0){
+        echo "<h4>Sorry, no results - <a href='index.php'>search again</a>.</h4>";
+    }
 ?>
 
 

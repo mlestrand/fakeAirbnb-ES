@@ -1,11 +1,15 @@
 /* Add any additional style as necessary*/
-  
+
+#results{
+  padding-top: 25%;
+}
+
 .modal-body {
     display: flex;
   }
   
 
-
   .modal-footer{
     display:block;
   }
+
