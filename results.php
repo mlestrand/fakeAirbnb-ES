@@ -4,8 +4,12 @@ $db=dbConnect();
 $neighborhoodId = $_GET['neighborhood'];
 $roomId = $_GET['room'];
 $number = $_GET['number'];
-$neighborhood = convertNeighborhoodId($db,$neighborhoodId);
-$room = convertRoomId($db,$roomId);
+if ($neighborhoodId!='any'){
+    $neighborhood = convertNeighborhoodId($db,$neighborhoodId);
+}
+if ($roomId!='any'){
+    $room = convertRoomId($db,$roomId);
+}
 $numberOfResults = findNumberOfResults($db,$neighborhoodId, $roomId, $number);
 $results = getResults($db,$neighborhoodId, $roomId, $number);
 if ($numberOfResults>20){$numberOfResults=20;}
@@ -59,8 +63,20 @@ if ($numberOfResults>20){$numberOfResults=20;}
 
             <h1>Results(<?=$numberOfResults?>)</h1>
 
-            <p><b>Neighborhood:</b> <?= $neighborhood ?> </p>
-            <p><b>Room Type:</b> <?= $room ?> </p>
+            <p><b>Neighborhood:</b> 
+                <?php 
+                if($neighborhoodId=='any'){
+                echo "Any";}
+                else {echo $neighborhood;}
+                ?> 
+            </p>
+            <p><b>Room Type:</b> 
+            <?php 
+                if($roomId=='any'){
+                echo "Any";}
+                else {echo $room;}
+                ?> 
+            </p>
             <p><b>Accomodates:</b> <?= $number ?> </p>
 
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">

@@ -51,10 +51,22 @@ function populateCards($db,$results, $numberOfResults){
 }
 
 function findNumberOfResults($db, $nId, $rId, $a){
-    // NEED TO MAKE EXCEPTIONS FOR "ANY"
     try {
-        $stmt = $db->prepare("select COUNT(*) from listings where neighborhoodId='$nId' 
-        and roomTypeId='$rId' and accommodates>='$a'");
+        if ($nId=='any' && $rId=='any'){
+            $stmt = $db->prepare("select COUNT(*) from listings where accommodates>='$a'");
+        }
+        else if ($nId=='any'){
+            $stmt = $db->prepare("select COUNT(*) from listings where
+            roomTypeId='$rId' and accommodates>='$a'");
+        }
+        else if ($rId=='any'){
+            $stmt = $db->prepare("select COUNT(*) from listings where neighborhoodId='$nId' 
+            and accommodates>='$a'");
+        }
+        else{
+            $stmt = $db->prepare("select COUNT(*) from listings where neighborhoodId='$nId' 
+            and roomTypeId='$rId' and accommodates>='$a'");
+        }
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -65,10 +77,22 @@ function findNumberOfResults($db, $nId, $rId, $a){
 }
 
 function getResults($db, $nId, $rId, $a){
-    // NEED TO MAKE EXCEPTIONS FOR "ANY"
     try {
-        $stmt = $db->prepare("select * from listings where neighborhoodId='$nId' 
-        and roomTypeId='$rId' and accommodates>='$a'");
+        if ($nId=='any' && $rId=='any'){
+            $stmt = $db->prepare("select * from listings where accommodates>='$a'");
+        }
+        else if ($nId=='any'){
+            $stmt = $db->prepare("select * from listings where
+            roomTypeId='$rId' and accommodates>='$a'");
+        }
+        else if ($rId=='any'){
+            $stmt = $db->prepare("select * from listings where neighborhoodId='$nId' 
+            and accommodates>='$a'");
+        }
+        else {
+            $stmt = $db->prepare("select * from listings where neighborhoodId='$nId' 
+            and roomTypeId='$rId' and accommodates>='$a'");
+        }
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
