@@ -38,7 +38,7 @@ function populateCards($db,$results, $numberOfResults){
     
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                        <button type="button" id="3301" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
+                        <button type="button" id="'.$results[$i]["id"].'" class="btn btn-sm btn-outline-secondary viewListing" data-bs-toggle="modal" data-bs-target="#fakeAirbnbnModal">View</button>
         
                     </div>
                     <small class="text-muted">$'.$results[$i]["price"].'</small>
@@ -54,19 +54,19 @@ function populateCards($db,$results, $numberOfResults){
 function findNumberOfResults($db, $nId, $rId, $a){
     try {
         if ($nId=='any' && $rId=='any'){
-            $stmt = $db->prepare("select COUNT(*) from listings where accommodates>='$a'");
+            $stmt = $db->prepare("select COUNT(*) from listings where accommodates>='$a' limit 20");
         }
         else if ($nId=='any'){
             $stmt = $db->prepare("select COUNT(*) from listings where
-            roomTypeId='$rId' and accommodates>='$a'");
+            roomTypeId='$rId' and accommodates>='$a' limit 20");
         }
         else if ($rId=='any'){
             $stmt = $db->prepare("select COUNT(*) from listings where neighborhoodId='$nId' 
-            and accommodates>='$a'");
+            and accommodates>='$a' limit 20");
         }
         else{
             $stmt = $db->prepare("select COUNT(*) from listings where neighborhoodId='$nId' 
-            and roomTypeId='$rId' and accommodates>='$a'");
+            and roomTypeId='$rId' and accommodates>='$a' limit 20");
         }
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -80,19 +80,19 @@ function findNumberOfResults($db, $nId, $rId, $a){
 function getResults($db, $nId, $rId, $a){
     try {
         if ($nId=='any' && $rId=='any'){
-            $stmt = $db->prepare("select * from listings where accommodates>='$a'");
+            $stmt = $db->prepare("select * from listings where accommodates>='$a' limit 20");
         }
         else if ($nId=='any'){
             $stmt = $db->prepare("select * from listings where
-            roomTypeId='$rId' and accommodates>='$a'");
+            roomTypeId='$rId' and accommodates>='$a limit 20");
         }
         else if ($rId=='any'){
             $stmt = $db->prepare("select * from listings where neighborhoodId='$nId' 
-            and accommodates>='$a'");
+            and accommodates>='$a' limit 20");
         }
         else {
             $stmt = $db->prepare("select * from listings where neighborhoodId='$nId' 
-            and roomTypeId='$rId' and accommodates>='$a'");
+            and roomTypeId='$rId' and accommodates>='$a' limit 20");
         }
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);

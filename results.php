@@ -106,6 +106,10 @@ if ($numberOfResults>20){$numberOfResults=20;}
         </div>
     </footer>
     <!-- modal-->
+    <?php 
+    // parse the JSON from ajax.php
+    // populate modal accordingly 
+    ?>
     <div class="modal fade modal-lg" id="fakeAirbnbnModal" tabindex="-1" aria-labelledby="fakeAirbnbnModalLabel" aria-modal="true" role="dialog" >
       <div class="modal-dialog">
             <div class="modal-content">
